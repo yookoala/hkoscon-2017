@@ -69,9 +69,26 @@
 
       {% if topic.isSponsorTopic and topic.sponsor %}
       <div class="sponsor-wrapper">
-        <h2>Sponsored by</h2>
-        {% set sponsor = data.sponsor.sponsor_types[1].sponsors[0] %}
-        {% include 'sponsor/partial.jinja' %}
+        <h2>Sponsored by {{ topic.sponsor }}</h2>
+
+        {% for sponsor_type in data.sponsor.sponsor_types %}
+          {% for sponsor in sponsor_type.sponsors %}
+            {% if sponsor.id == topic.sponsor %}
+              {% include 'sponsor/partial.jinja' %}
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+        {#}
+        {% for sponsor_id in topic.sponsor %}
+          <div>{{ sponsor_type.name }}</div>
+          {% for sponsor in data.sponsor.sponsor_type.sponsors %}
+            <div>{{ sponsor.name }}</div>
+            {% if sponsor.id == topic.sponsor %}
+              {% include 'sponsor/partial.jinja' %}
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+        #}
       </div>
       {% endif %}
 
